@@ -19,6 +19,7 @@ scene.add(camera);
 function resize() {
   renderer.setSize(innerWidth, innerHeight, false);
   camera.aspect = innerWidth / innerHeight;
+  camera.fov = camera.aspect < 1 ? 100 : 72;
   camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize); resize();
@@ -337,7 +338,7 @@ let lookId = null, lx = 0, ly = 0;
 canvas.addEventListener('pointerdown', e => { if (state !== 'play' || busy || lookId !== null) return; lookId = e.pointerId; lx = e.clientX; ly = e.clientY; canvas.setPointerCapture(e.pointerId); });
 canvas.addEventListener('pointermove', e => {
   if (e.pointerId !== lookId) return;
-  yaw -= (e.clientX - lx) * .005; pitch = clamp(pitch - (e.clientY - ly) * .005, -1.45, 1.4); lx = e.clientX; ly = e.clientY;
+  yaw -= (e.clientX - lx) * .007; pitch = clamp(pitch - (e.clientY - ly) * .007, -1.5, 1.5); lx = e.clientX; ly = e.clientY;
 });
 ['pointerup', 'pointercancel'].forEach(ev => canvas.addEventListener(ev, e => { if (e.pointerId === lookId) lookId = null; }));
 document.addEventListener('contextmenu', e => e.preventDefault());
